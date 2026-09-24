@@ -1,0 +1,22 @@
+# Rust Cargo artifacts
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# IDE Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project Testing Files & Keys (CRITICAL FOR OPSEC)
+*.diegox
+*.diegoxkey
+*.key
+*.pem
+temp/

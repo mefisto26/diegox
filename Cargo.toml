@@ -1,0 +1,40 @@
+[package]
+name = "diegox"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ndarray = { version = "0.15.6", features = ["rayon", "serde"] }
+rand = "0.8.5"
+rand_chacha = "0.3.1"
+rand_distr = "0.4.3"
+rayon = "1.8.0"
+serde = { version = "1.0", features = ["derive"] }
+bincode = "1.3.3"
+sha2 = "0.10.8"
+eframe = "0.27.0"
+rfd = "0.14.1"
+base64 = "0.21.7"
+argon2 = "0.5.3"
+image = { version = "0.24", features = ["ico", "png"] }
+dirs = "5.0"
+
+[build-dependencies]
+winres = "0.1"
+
+[package.metadata.packager]
+# Nombre del ejecutable que debe empaquetar (coincide con tu binario)
+product_name = "DIEGOX"
+identifier = "com.diegox.suite"
+before_packaging_command = "cargo build --release"
+
+# Formatos de salida para Windows (NSIS crea un instalador .exe nativo)
+formats = ["nsis"]
+
+# Iconos y assets de la aplicación
+icons = ["app_icon.ico"]
+
+# Configuración del ejecutable dentro del paquete
+binaries = [
+  { path = "diegox", main = true }
+]
