@@ -67,7 +67,7 @@ impl QuantumEngine {
         }
 
         let mut hasher = Sha256::new();
-        hasher.update(&seed);
+        hasher.update(seed);
         let sym_key: [u8; 32] = hasher.finalize().into();
 
         let mut block = build_sealed_payload(payload, ext);

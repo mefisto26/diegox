@@ -1,4 +1,6 @@
-use eframe::egui::{self, Color32, Margin, Pos2, Rect, Response, RichText, Rounding, Sense, Stroke, Vec2};
+use eframe::egui::{
+    self, Color32, Margin, Pos2, Rect, Response, RichText, Rounding, Sense, Stroke, Vec2,
+};
 
 use crate::gui::state::GuiState;
 use crate::gui::theme::{MATRIX_DEEP_BLACK, MATRIX_DIM_GREEN, MATRIX_NEON_GREEN};
@@ -22,10 +24,7 @@ enum TitlebarButtonType {
     Close,
 }
 
-fn titlebar_button(
-    ui: &mut egui::Ui,
-    button_type: TitlebarButtonType,
-) -> Response {
+fn titlebar_button(ui: &mut egui::Ui, button_type: TitlebarButtonType) -> Response {
     let size = Vec2::new(34.0, 26.0);
     let (rect, response) = ui.allocate_exact_size(size, Sense::click());
 
@@ -33,7 +32,10 @@ fn titlebar_button(
 
     let (bg_color, stroke_color) = if response.hovered() {
         if is_close {
-            (Color32::from_rgb(0x8B, 0x00, 0x00), Color32::from_rgb(0xFF, 0x33, 0x33))
+            (
+                Color32::from_rgb(0x8B, 0x00, 0x00),
+                Color32::from_rgb(0xFF, 0x33, 0x33),
+            )
         } else {
             (Color32::from_rgb(0x1E, 0x5A, 0x1E), MATRIX_NEON_GREEN)
         }
@@ -42,7 +44,8 @@ fn titlebar_button(
     };
 
     if response.hovered() {
-        ui.painter().rect_filled(rect, Rounding::same(3.0), bg_color);
+        ui.painter()
+            .rect_filled(rect, Rounding::same(3.0), bg_color);
     }
 
     let stroke = Stroke::new(1.5, stroke_color);
@@ -56,7 +59,8 @@ fn titlebar_button(
             let max = Pos2::new(center.x + half_size, center.y + half_size);
 
             ui.painter().line_segment([min, max], stroke);
-            ui.painter().line_segment([Pos2::new(max.x, min.y), Pos2::new(min.x, max.y)], stroke);
+            ui.painter()
+                .line_segment([Pos2::new(max.x, min.y), Pos2::new(min.x, max.y)], stroke);
         }
         TitlebarButtonType::Minimize => {
             // Línea horizontal centrada
@@ -64,7 +68,10 @@ fn titlebar_button(
             let half_width = 5.0;
             let y = center.y + 2.0;
             ui.painter().line_segment(
-                [Pos2::new(center.x - half_width, y), Pos2::new(center.x + half_width, y)],
+                [
+                    Pos2::new(center.x - half_width, y),
+                    Pos2::new(center.x + half_width, y),
+                ],
                 stroke,
             );
         }
@@ -74,7 +81,7 @@ fn titlebar_button(
             if is_maximized {
                 // Dibujo de dos cuadrados superpuestos (Restaurar)
                 let box_size = 8.0;
-                
+
                 // Cuadrado trasero (superior derecho)
                 let back_rect = Rect::from_min_size(
                     Pos2::new(center.x - 2.0, center.y - 6.0),
@@ -87,7 +94,8 @@ fn titlebar_button(
                     Pos2::new(center.x - 6.0, center.y - 2.0),
                     Vec2::splat(box_size),
                 );
-                ui.painter().rect_filled(front_rect, Rounding::ZERO, bg_color);
+                ui.painter()
+                    .rect_filled(front_rect, Rounding::ZERO, bg_color);
                 ui.painter().rect_stroke(front_rect, Rounding::ZERO, stroke);
             } else {
                 // Cuadrado único centrado (Maximizar)
@@ -145,7 +153,8 @@ pub fn draw_custom_titlebar(state: &mut GuiState, ctx: &egui::Context) {
                         .on_hover_text(if is_maximized { "Restore" } else { "Maximize" })
                         .clicked()
                     {
-                        ui.ctx().send_viewport_cmd(egui::ViewportCommand::Maximized(!is_maximized));
+                        ui.ctx()
+                            .send_viewport_cmd(egui::ViewportCommand::Maximized(!is_maximized));
                     }
 
                     // Botón Minimizar (-)
@@ -153,22 +162,22 @@ pub fn draw_custom_titlebar(state: &mut GuiState, ctx: &egui::Context) {
                         .on_hover_text("Minimize")
                         .clicked()
                     {
-                        ui.ctx().send_viewport_cmd(egui::ViewportCommand::Minimized(true));
+                        ui.ctx()
+                            .send_viewport_cmd(egui::ViewportCommand::Minimized(true));
                     }
 
                     // 3. Área central arrastrable
                     let remaining_size = Vec2::new(ui.available_width().max(0.0), bar_height);
-                    let (_drag_rect, drag_resp) = ui.allocate_exact_size(
-                        remaining_size,
-                        Sense::click_and_drag(),
-                    );
+                    let (_drag_rect, drag_resp) =
+                        ui.allocate_exact_size(remaining_size, Sense::click_and_drag());
 
                     if drag_resp.dragged() {
                         ui.ctx().send_viewport_cmd(egui::ViewportCommand::StartDrag);
                     }
 
                     if drag_resp.double_clicked() {
-                        ui.ctx().send_viewport_cmd(egui::ViewportCommand::Maximized(!is_maximized));
+                        ui.ctx()
+                            .send_viewport_cmd(egui::ViewportCommand::Maximized(!is_maximized));
                     }
                 });
             });
