@@ -52,7 +52,7 @@ DIEGOX addresses both challenges through an integrated approach:
 
 ```bash
 # 1. Clone the repository
-git clone [https://github.com/your-username/diegox.git](https://github.com/your-username/diegox.git)
+git clone [https://github.com/mefisto26/diegox.git](https://github.com/mefisto26/diegox.git)
 cd diegox
 
 # 2. Compile and launch in release mode
