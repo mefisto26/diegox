@@ -1,3 +1,5 @@
+#![windows_subsystem = "windows"]
+
 use eframe::egui;
 use rand::SeedableRng;
 use rand_chacha::ChaCha20Rng;
